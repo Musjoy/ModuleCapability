@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://git.musjoy.com:ModuleCapability"
   s.license          = 'MIT'
   s.author           = { "Raymond" => "Ray.musjoy@gmail.com" }
-  s.source           = { :git => "git@git.musjoy.com:ModuleCapability.git", :tag => "v-#{spec.version}" }
+  s.source           = { :git => "git@git.musjoy.com:ModuleCapability.git", :tag => "v-#{s.version}" }
 
   s.ios.deployment_target = '7.0'
 

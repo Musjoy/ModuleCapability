@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = "0.1.0"
   s.summary          = "This is a configureation of module capability."
 
-  s.homepage         = "https://git.musjoy.com:ModuleCapability"
+  s.homepage         = "https://git.musjoy.com/ModuleCapability"
   s.license          = 'MIT'
   s.author           = { "Raymond" => "Ray.musjoy@gmail.com" }
   s.source           = { :git => "git@git.musjoy.com:ModuleCapability.git", :tag => "v-#{s.version}" }

@@ -17,7 +17,9 @@ Pod::Spec.new do |s|
   s.source           = { :git => "git@git.musjoy.com:ModuleCapability.git", :tag => "v-#{s.version}" }
 
   s.ios.deployment_target = '7.0'
-
+  s.user_target_xcconfig = {
+    'GCC_PREPROCESSOR_DEFINITIONS' => 'MODULE_CAPABILITY'
+  }
   s.source_files = 'ModuleCapability/Classes/**/*'
 
 end

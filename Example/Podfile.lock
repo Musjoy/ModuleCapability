@@ -1,0 +1,14 @@
+PODS:
+  - ModuleCapability (0.1.0)
+
+DEPENDENCIES:
+  - ModuleCapability (from `../`)
+
+EXTERNAL SOURCES:
+  ModuleCapability:
+    :path: ../
+
+SPEC CHECKSUMS:
+  ModuleCapability: a9d40d62d27cabe1588afe01a0ce4b096784d3f4
+
+COCOAPODS: 0.39.0

@@ -71,6 +71,7 @@ context:nil].size : CGSizeZero);
 /// 友盟分析模块
 //######################################
 #ifdef MODULE_UM_ANALYSE
+#define HEADER_UM_ANALYSE <UMMobClick/MobClick.h>
 #define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}];
 #define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs];
 #define triggerBeginPage(className) [MobClick beginLogPageView:className];

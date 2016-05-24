@@ -102,5 +102,38 @@ context:nil].size : CGSizeZero);
 });
 #endif
 
+//######################################
+/// ControllerManager
+//######################################
+// BaseViewController
+#ifdef MODULE_SUB_BASE_VIEW_CONTROLLER
+#define HEADER_BASE_VIEW_CONTROLLER "BaseViewController.h"
+#define THEBaseViewController       BaseViewController
+#elif defined(MODULE_CONTROLLER_MANAGER)
+#define HEADER_BASE_VIEW_CONTROLLER "MJBaseViewController.h"
+#define THEBaseViewController       MJBaseViewController
+#else
+#define HEADER_BASE_VIEW_CONTROLLER <UIKit/UIKit.h>
+#define THEBaseViewController       UIViewController
+#endif
+// NavigationController
+#ifdef MODULE_SUB_NAVIGATION_CONTROLLER
+#define HEADER_NAVIGATION_CONTROLLER    "NavigationController.h"
+#define THENavigationController         NavigationController
+#elif defined(MODULE_CONTROLLER_MANAGER)
+#define HEADER_NAVIGATION_CONTROLLER    "MJNavigationController.h"
+#define THENavigationController         MJNavigationController
+#else
+#define HEADER_NAVIGATION_CONTROLLER    <UIKit/UINavigationController.h>
+#define THENavigationController         UINavigationController
+#endif
+// ControllerManager
+#ifdef MODULE_SUB_CONTROLLER_MANAGER
+#define HEADER_CONTROLLER_MANAGER   "ControllerManager.h"
+#define THEControllerManager        ControllerManager
+#elif defined(MODULE_CONTROLLER_MANAGER)
+#define HEADER_CONTROLLER_MANAGER   "MJControllerManager.h"
+#define THEControllerManager        MJControllerManager
+#endif
 
 #endif /* ModuleCapability_h */

@@ -8,13 +8,13 @@
 
 Pod::Spec.new do |s|
   s.name             = "ModuleCapability"
-  s.version          = "0.1.1"
+  s.version          = "0.1.2"
   s.summary          = "This is a configureation of module capability."
 
-  s.homepage         = "https://git.musjoy.com/ModuleCapability"
+  s.homepage         = "https://github.com/Musjoy/ModuleCapability"
   s.license          = 'MIT'
   s.author           = { "Raymond" => "Ray.musjoy@gmail.com" }
-  s.source           = { :git => "git@git.musjoy.com:ModuleCapability.git", :tag => "v-#{s.version}" }
+  s.source           = { :git => "https://github.com/Musjoy/ModuleCapability.git", :tag => "v-#{s.version}" }
 
   s.ios.deployment_target = '7.0'
   s.user_target_xcconfig = {

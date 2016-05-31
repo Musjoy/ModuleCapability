@@ -109,7 +109,7 @@ context:nil].size : CGSizeZero);
 #ifdef MODULE_SUB_BASE_VIEW_CONTROLLER
 #define HEADER_BASE_VIEW_CONTROLLER "BaseViewController.h"
 #define THEBaseViewController       BaseViewController
-#elif defined(MODULE_CONTROLLER_MANAGER)
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJBaseViewController.h"))
 #define HEADER_BASE_VIEW_CONTROLLER "MJBaseViewController.h"
 #define THEBaseViewController       MJBaseViewController
 #else
@@ -120,7 +120,7 @@ context:nil].size : CGSizeZero);
 #ifdef MODULE_SUB_NAVIGATION_CONTROLLER
 #define HEADER_NAVIGATION_CONTROLLER    "NavigationController.h"
 #define THENavigationController         NavigationController
-#elif defined(MODULE_CONTROLLER_MANAGER)
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJNavigationController.h"))
 #define HEADER_NAVIGATION_CONTROLLER    "MJNavigationController.h"
 #define THENavigationController         MJNavigationController
 #else
@@ -131,7 +131,7 @@ context:nil].size : CGSizeZero);
 #ifdef MODULE_SUB_CONTROLLER_MANAGER
 #define HEADER_CONTROLLER_MANAGER   "ControllerManager.h"
 #define THEControllerManager        ControllerManager
-#elif defined(MODULE_CONTROLLER_MANAGER)
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJControllerManager.h"))
 #define HEADER_CONTROLLER_MANAGER   "MJControllerManager.h"
 #define THEControllerManager        MJControllerManager
 #endif

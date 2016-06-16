@@ -49,6 +49,13 @@ context:nil].size : CGSizeZero);
 // 屏幕宽度
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
+//######################################
+/// 常量默认值
+//######################################
+/** 默认动画持续时间 */
+#ifndef DEFAULT_ANIMATE_DURATION
+#define DEFAULT_ANIMATE_DURATION 0.3
+#endif
 
 //######################################
 /// Logging配置

@@ -12,7 +12,9 @@
 //######################################
 /// 常用函数
 //######################################
+// 字符串拼接
 #define combine(x, y)   [(x) stringByAppendingString:(y)]
+// 字符串长度获取
 #define textSizeWithFont(text, font) ([text length] > 0 ? [text sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero);
 #define multilineTextSize(text, font, maxSize) ([text length] > 0 ? \
 [text boundingRectWithSize:maxSize \
@@ -75,6 +77,32 @@ context:nil].size : CGSizeZero);
 #import "Logging.h"
 
 //######################################
+/// 高级函数
+//######################################
+#ifdef MODULE_DB_MODEL
+#define objectFromString(str, err) [DBModel objectFromJSONString:str error:err]
+#else
+#define objectFromString(str, err) ({       \
+    id aNil = nil;                          \
+    id obj = aNil;                          \
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];            \
+    if (data) {                             \
+        NSError *initError = aNil;          \
+        @try {                              \
+            obj = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&initError];   \
+        } @catch (NSException *exception) { \
+            obj = aNil;                     \
+        }                                   \
+    }                                       \
+    obj;                                    \
+})
+#endif
+
+
+
+
+
+//######################################
 /// 友盟分析模块
 //######################################
 #ifdef MODULE_UM_ANALYSE
@@ -106,7 +134,7 @@ context:nil].size : CGSizeZero);
     NSString *filePath = [fileBundle stringByAppendingPathComponent:fileName]; \
     NSDictionary *aDic = [[NSDictionary alloc] initWithContentsOfFile:filePath]; \
     aDic[@"body"]; \
-});
+})
 #endif
 
 //######################################

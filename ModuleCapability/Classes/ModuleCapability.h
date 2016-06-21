@@ -79,6 +79,7 @@ context:nil].size : CGSizeZero);
 //######################################
 /// 高级函数
 //######################################
+// Json 解析
 #ifdef MODULE_DB_MODEL
 #define objectFromString(str, err) [DBModel objectFromJSONString:str error:err]
 #else
@@ -97,9 +98,23 @@ context:nil].size : CGSizeZero);
     obj;                                    \
 })
 #endif
-
-
-
+// Parse json
+#ifdef MODULE_UTILS1
+#define jsonStringFromDic(aDic) [aDic convertToJsonString]
+#else
+#define jsonStringFromDic(aDic) ({          \
+    NSData* jsonData = nil;                 \
+    NSError* jsonError = nil;               \
+    @try {                                  \
+        jsonData = [NSJSONSerialization dataWithJSONObject:aDic             \
+                                                   options:kNilOptions      \
+                                                     error:&jsonError];     \
+    } @catch (NSException *exception) {     \
+        jsonData = nil;                     \
+    }                                       \
+    [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]; \
+})
+#endif
 
 
 //######################################

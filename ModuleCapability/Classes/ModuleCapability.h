@@ -99,7 +99,7 @@ context:nil].size : CGSizeZero);
 })
 #endif
 // Parse json
-#ifdef MODULE_UTILS1
+#ifdef MODULE_UTILS
 #define jsonStringFromDic(aDic) [aDic convertToJsonString]
 #else
 #define jsonStringFromDic(aDic) ({          \

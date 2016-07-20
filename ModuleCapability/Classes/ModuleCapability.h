@@ -26,7 +26,7 @@ context:nil].size : CGSizeZero);
 //######################################
 /// 用户自定义常量导入
 //######################################
-#ifdef MODULE_USER_CONSTANT
+#if __has_include("Constant.h")
 #import "Constant.h"
 #endif
 
@@ -40,6 +40,7 @@ context:nil].size : CGSizeZero);
 // App Store
 #ifndef kAppID
 #define kAppID   @"unknown"
+#warning @"App id is not defined!"
 #endif
 #define kAppLookUpUrl    combine(@"http://itunes.apple.com/lookup?id=", kAppID)
 #define kAppDownload     combine(@"http://itunes.apple.com/app/id", kAppID)
@@ -120,12 +121,12 @@ context:nil].size : CGSizeZero);
 //######################################
 /// 友盟分析模块
 //######################################
-#ifdef MODULE_UM_ANALYSE
+#if __has_include(<UMMobClick/MobClick.h>)
 #define HEADER_UM_ANALYSE <UMMobClick/MobClick.h>
-#define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}];
-#define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs];
-#define triggerBeginPage(className) [MobClick beginLogPageView:className];
-#define triggerEndPage(className) [MobClick endLogPageView:className];
+#define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}]
+#define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs]
+#define triggerBeginPage(className) [MobClick beginLogPageView:className]
+#define triggerEndPage(className) [MobClick endLogPageView:className]
 #else
 #define triggerEventStr(eventId, evenDesc) NSLog(@"%@", evenDesc)
 #define triggerEvent(eventId, attrs) NSLog(@"%@", attrs)
@@ -141,22 +142,36 @@ context:nil].size : CGSizeZero);
 /// FileSource
 //######################################
 #ifdef MODULE_FILE_SOURCE
-#define getPlistFileData(aPlistName) [FileSource dataWithPlistName:aPlistName];
+#define getFileData(aFileName) [FileSource dataWithFileName:aFileName]
+#define getPlistFileData(aPlistName) [FileSource dataWithPlistName:aPlistName]
+#define getJsonFileData(aJsonName) [FileSource dataWithJsonName:aJsonName]
 #else
 #define getPlistFileData(aPlistName) ({ \
     NSString *fileName = [aPlistName stringByAppendingString:@".plist"]; \
     NSString *fileBundle = [[NSBundle mainBundle] resourcePath]; \
     NSString *filePath = [fileBundle stringByAppendingPathComponent:fileName]; \
     NSDictionary *aDic = [[NSDictionary alloc] initWithContentsOfFile:filePath]; \
-    aDic[@"body"]; \
+    aDic; \
 })
+#define getJsonFileData(aJsonName) ({ \
+    NSString *fileName = [aJsonName stringByAppendingString:@".json"]; \
+    NSString *fileBundle = [[NSBundle mainBundle] resourcePath]; \
+    NSString *filePath = [fileBundle stringByAppendingPathComponent:fileName]; \
+    NSData *data=[NSData dataWithContentsOfFile:filePath];             \
+    id aNil = nil;  \
+    id jsonObject=[NSJSONSerialization JSONObjectWithData:data          \
+                                                  options:NSJSONReadingAllowFragments   \
+                                                    error:nil];          \
+    jsonObject; \
+})
+#define getFileData(aFileName) getPlistFileData(aPlistName)
 #endif
 
 //######################################
 /// ControllerManager
 //######################################
 // BaseViewController
-#ifdef MODULE_SUB_BASE_VIEW_CONTROLLER
+#if __has_include("BaseViewController.h")
 #define HEADER_BASE_VIEW_CONTROLLER "BaseViewController.h"
 #define THEBaseViewController       BaseViewController
 #elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJBaseViewController.h"))
@@ -167,7 +182,7 @@ context:nil].size : CGSizeZero);
 #define THEBaseViewController       UIViewController
 #endif
 // NavigationController
-#ifdef MODULE_SUB_NAVIGATION_CONTROLLER
+#if __has_include("NavigationController.h")
 #define HEADER_NAVIGATION_CONTROLLER    "NavigationController.h"
 #define THENavigationController         NavigationController
 #elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJNavigationController.h"))
@@ -178,7 +193,7 @@ context:nil].size : CGSizeZero);
 #define THENavigationController         UINavigationController
 #endif
 // ControllerManager
-#ifdef MODULE_SUB_CONTROLLER_MANAGER
+#if __has_include("ControllerManager.h")
 #define HEADER_CONTROLLER_MANAGER   "ControllerManager.h"
 #define THEControllerManager        ControllerManager
 #elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJControllerManager.h"))

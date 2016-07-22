@@ -164,7 +164,7 @@ context:nil].size : CGSizeZero);
                                                     error:nil];          \
     jsonObject; \
 })
-#define getFileData(aFileName) getPlistFileData(aPlistName)
+#define getFileData(aFileName) getPlistFileData(aFileName)
 #endif
 
 //######################################

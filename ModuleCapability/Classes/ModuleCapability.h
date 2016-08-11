@@ -40,7 +40,9 @@ context:nil].size : CGSizeZero);
 // App Store
 #ifndef kAppID
 #define kAppID   @"unknown"
+#ifdef IN_PROJECT
 #warning @"App id is not defined!"
+#endif
 #endif
 #define kAppLookUpUrl    combine(@"http://itunes.apple.com/lookup?id=", kAppID)
 #define kAppDownload     combine(@"http://itunes.apple.com/app/id", kAppID)

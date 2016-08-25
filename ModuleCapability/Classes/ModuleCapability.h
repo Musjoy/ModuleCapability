@@ -9,6 +9,20 @@
 #ifndef ModuleCapability_h
 #define ModuleCapability_h
 
+#ifdef __cplusplus
+#define MJ_EXTERN_C_BEGIN  extern "C" {
+#define MJ_EXTERN_C_END  }
+#else
+#define MJ_EXTERN_C_BEGIN
+#define MJ_EXTERN_C_END
+#endif
+
+#ifdef __cplusplus
+# define MJ_EXTERN extern "C" __attribute__((visibility("default")))
+#else
+# define MJ_EXTERN extern __attribute__((visibility("default")))
+#endif
+
 //######################################
 /// 常用函数
 //######################################

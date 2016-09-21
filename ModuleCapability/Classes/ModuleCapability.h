@@ -216,5 +216,14 @@ context:nil].size : CGSizeZero);
 #define HEADER_CONTROLLER_MANAGER   "MJControllerManager.h"
 #define THEControllerManager        MJControllerManager
 #endif
+#if __has_include("MJWindowRootViewController.h")
+#define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  "MJWindowRootViewController.h"
+#define THEWindowRootViewController         MJWindowRootViewController
+#else
+#define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  HEADER_BASE_VIEW_CONTROLLER
+#define THEWindowRootViewController         THEBaseViewController
+#endif
+
+
 
 #endif /* ModuleCapability_h */

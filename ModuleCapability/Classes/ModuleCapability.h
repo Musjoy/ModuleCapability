@@ -138,20 +138,20 @@ context:nil].size : CGSizeZero);
 /// 友盟分析模块
 //######################################
 #if __has_include(<UMMobClick/MobClick.h>)
-#define HEADER_UM_ANALYSE <UMMobClick/MobClick.h>
+#define HEADER_ANALYSE <UMMobClick/MobClick.h>
 #define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}]
 #define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs]
 #define triggerBeginPage(className) [MobClick beginLogPageView:className]
 #define triggerEndPage(className) [MobClick endLogPageView:className]
 #else
-#define triggerEventStr(eventId, evenDesc) NSLog(@"%@", evenDesc)
-#define triggerEvent(eventId, attrs) NSLog(@"%@", attrs)
-#define triggerBeginPage(className) NSLog(@"%@", className)
-#define triggerEndPage(className) NSLog(@"%@", className)
+#define triggerEventStr(eventId, evenDesc) NSLog(@"Event trigger : %@", evenDesc)
+#define triggerEvent(eventId, attrs) NSLog(@"Event trigger : %@", attrs)
+#define triggerBeginPage(className) NSLog(@"Page begin : %@", className)
+#define triggerEndPage(className) NSLog(@"Page end : %@", className)
 #endif
 /// 对应通用统计事件定义
-#ifndef stat_Error
-#define stat_Error      @"Error"
+#ifndef STAT_Error
+#define STAT_Error      @"Error"
 #endif
 
 //######################################

@@ -55,7 +55,11 @@ context:nil].size : CGSizeZero);
 #ifndef kAppID
 #define kAppID   @"unknown"
 #ifdef IN_PROJECT
-#warning @"App id is not defined!"
+#ifdef DEBUG
+#warning    @"App id is not defined!"
+#else
+#error      @"App id is not defined!"
+#endif
 #endif
 #endif
 #define kAppLookUpUrl    combine(@"http://itunes.apple.com/lookup?id=", kAppID)

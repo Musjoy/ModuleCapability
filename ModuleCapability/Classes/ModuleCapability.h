@@ -102,8 +102,12 @@ context:nil].size : CGSizeZero);
 //######################################
 // Json 解析
 #ifdef MODULE_DB_MODEL
+#define HEADER_MODEL        "DBModel.h"
+#define MODEL_BASE_CLASS    DBModel
 #define objectFromString(str, err) [DBModel objectFromJSONString:str error:err]
 #else
+#define HEADER_MODEL        <Foundation/Foundation.h>
+#define MODEL_BASE_CLASS    NSObject
 #define objectFromString(str, err) ({       \
     id aNil = nil;                          \
     id obj = aNil;                          \

@@ -23,8 +23,9 @@
 # define MJ_EXTERN extern __attribute__((visibility("default")))
 #endif
 
+
 //######################################
-/// 常用函数
+#pragma mark - 常用函数
 //######################################
 // 字符串拼接
 #define combine(x, y)   [(x) stringByAppendingString:(y)]
@@ -38,14 +39,14 @@ context:nil].size : CGSizeZero);
 
 
 //######################################
-/// 用户自定义常量导入
+#pragma mark - 用户自定义常量导入
 //######################################
 #if __has_include("Constant.h")
 #import "Constant.h"
 #endif
 
 //######################################
-// 部分常量定义
+#pragma mark - 部分常量定义
 //######################################
 // 公开版本号。eg：1.0
 #define kClientVersionShort [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -73,7 +74,7 @@ context:nil].size : CGSizeZero);
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
 //######################################
-/// 常量默认值
+#pragma mark - 常量默认值
 //######################################
 /** 默认动画持续时间 */
 #ifndef DEFAULT_ANIMATE_DURATION
@@ -81,24 +82,22 @@ context:nil].size : CGSizeZero);
 #endif
 
 //######################################
-/// Logging配置
+#pragma mark - Logging配置
 //######################################
-#ifndef IS_LOGGING_IN_USE
+#ifndef LOGGING_CONFIG_BY_USER
 #ifdef DEBUG
 // TRACE CONFIG
 #define LOGGING_ENABLED 1
 #define LOGGING_INCLUDE_CODE_LOCATION 1
 #define LOGGING_LEVEL_INFO 1
 // FILE LOGGING
-#define LOGGING_TO_FILE
-// 开发时使用，发版本时应去掉
-#undef LOGGING_TO_FILE
+//#define LOGGING_TO_FILE
 #endif
 #endif
 #import "Logging.h"
 
 //######################################
-/// 高级函数
+#pragma mark - 高级函数
 //######################################
 // Json 解析
 #ifdef MODULE_DB_MODEL
@@ -143,7 +142,15 @@ context:nil].size : CGSizeZero);
 
 
 //######################################
-/// 统计分析模块
+#pragma mark - 服务器URL
+//######################################
+#ifndef HEADER_SERVER_URL
+#define HEADER_SERVER_URL <Foundation/Foundation.h>
+#endif
+
+
+//######################################
+#pragma mark - 统计分析模块
 //######################################
 #ifndef DEBUG
 #if __has_include(<UMMobClick/MobClick.h>)
@@ -165,8 +172,9 @@ context:nil].size : CGSizeZero);
 #define STAT_Error      @"Error"
 #endif
 
+
 //######################################
-/// FileSource
+#pragma mark - FileSource
 //######################################
 #ifdef MODULE_FILE_SOURCE
 #define getFileData(aFileName) [FileSource dataWithFileName:aFileName]
@@ -195,7 +203,7 @@ context:nil].size : CGSizeZero);
 #endif
 
 //######################################
-/// ControllerManager
+#pragma mark - ControllerManager
 //######################################
 // BaseViewController
 #if __has_include("BaseViewController.h")

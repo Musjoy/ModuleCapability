@@ -143,15 +143,18 @@ context:nil].size : CGSizeZero);
 
 
 //######################################
-/// 友盟分析模块
+/// 统计分析模块
 //######################################
+#ifndef DEBUG
 #if __has_include(<UMMobClick/MobClick.h>)
 #define HEADER_ANALYSE <UMMobClick/MobClick.h>
 #define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}]
 #define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs]
 #define triggerBeginPage(className) [MobClick beginLogPageView:className]
 #define triggerEndPage(className) [MobClick endLogPageView:className]
-#else
+#endif
+#endif
+#ifndef triggerEventStr
 #define triggerEventStr(eventId, evenDesc) NSLog(@"Event trigger : %@", evenDesc)
 #define triggerEvent(eventId, attrs) NSLog(@"Event trigger : %@", attrs)
 #define triggerBeginPage(className) NSLog(@"Page begin : %@", className)

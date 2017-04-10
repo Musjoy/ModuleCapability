@@ -45,6 +45,8 @@ context:nil].size : CGSizeZero);
 #import "Constant.h"
 #endif
 
+
+
 //######################################
 #pragma mark - 部分常量定义
 //######################################
@@ -73,6 +75,7 @@ context:nil].size : CGSizeZero);
 // 屏幕宽度
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 
+
 //######################################
 #pragma mark - 常量默认值
 //######################################
@@ -80,6 +83,7 @@ context:nil].size : CGSizeZero);
 #ifndef DEFAULT_ANIMATE_DURATION
 #define DEFAULT_ANIMATE_DURATION 0.3
 #endif
+
 
 //######################################
 #pragma mark - Logging配置
@@ -96,8 +100,27 @@ context:nil].size : CGSizeZero);
 #endif
 #import "Logging.h"
 
+
 //######################################
-#pragma mark - 高级函数
+#pragma mark - 本地化
+//######################################
+
+#ifndef locString
+#ifdef MODULE_LOCALIZE
+#define HEADER_LOCALIZE     <MJLocalize.h>
+#define locString(str)                  [MJLocalize localizedString:str]
+#define locStringWithFormat(str,...)    [MJLocalize localizedStringWithFormat:str, __VA_ARGS__]
+#else
+#define HEADER_LOCALIZE     <Foundation/Foundation.h>
+#define locString(str)                  NSLocalizedString(str, nil)
+#define locStringWithFormat(str,...)    [NSString localizedStringWithFormat:NSLocalizedString(str,nil), __VA_ARGS__]
+#endif
+#else 
+#define HEADER_LOCALIZE     <Foundation/Foundation.h>
+#endif
+
+//######################################
+#pragma mark - Json 解析
 //######################################
 // Json 解析
 #ifdef MODULE_DB_MODEL

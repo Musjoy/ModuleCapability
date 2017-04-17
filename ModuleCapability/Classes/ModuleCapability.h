@@ -187,7 +187,7 @@ context:nil].size : CGSizeZero);
 #endif
 #ifndef triggerEventStr
 #define triggerEventStr(eventId, evenDesc) NSLog(@"Event trigger : %@", evenDesc)
-#define triggerEvent(eventId, attrs) NSLog(@"Event trigger : %@", attrs)
+#define triggerEvent(eventId, attrs) NSLog(@"Event trigger : %@ ; %@", attrs[@"name"], attrs)
 #define triggerBeginPage(className) NSLog(@"Page begin : %@", className)
 #define triggerEndPage(className) NSLog(@"Page end : %@", className)
 #endif

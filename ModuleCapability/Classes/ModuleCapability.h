@@ -126,10 +126,12 @@ context:nil].size : CGSizeZero);
 // Json 解析
 #ifdef MODULE_DB_MODEL
 #define HEADER_MODEL        "DBModel.h"
+#define HEADER_JSON_PARSE   "DBModel.h"
 #define MODEL_BASE_CLASS    DBModel
 #define objectFromString(str, err) [DBModel objectFromJSONString:str error:err]
 #else
 #define HEADER_MODEL        <Foundation/Foundation.h>
+#define HEADER_JSON_PARSE   <Foundation/Foundation.h>
 #define MODEL_BASE_CLASS    NSObject
 #define objectFromString(str, err) ({       \
     id aNil = nil;                          \
@@ -146,10 +148,12 @@ context:nil].size : CGSizeZero);
     obj;                                    \
 })
 #endif
-// Parse json
+// Json 生成
 #ifdef MODULE_UTILS
+#define HEADER_JSON_GENERATE    <MJUtils/NSDictionary+Utils.h>
 #define jsonStringFromDic(aDic) [aDic convertToJsonString]
 #else
+#define HEADER_JSON_GENERATE    <Foundation/Foundation.h>
 #define jsonStringFromDic(aDic) ({          \
     NSData* jsonData = nil;                 \
     NSError* jsonError = nil;               \

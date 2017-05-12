@@ -173,9 +173,42 @@ context:nil].size : CGSizeZero);
 #pragma mark - 服务器URL
 //######################################
 #ifndef HEADER_SERVER_URL
-#define HEADER_SERVER_URL <Foundation/Foundation.h>
+#define HEADER_SERVER_URL   <Foundation/Foundation.h>
 #endif
 
+//######################################
+#pragma mark - 网络请求服务
+//######################################
+#ifndef HEADER_WEB_SERVICE
+// callback (^(NSURLResponse *response, id data, NSError *error) )
+#ifdef MODULE_WEB_SERVICE
+#define HEADER_WEB_SERVICE  <MJWebService/MJWebService.h>
+#define getServerUrl(urlString, callback) [MJWebService startGet:urlString body:nil completion:callback]
+#else
+#define HEADER_WEB_SERVICE  <Foundation/Foundation.h>
+#define getServerUrl(urlString, callback) { \
+NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
+[NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] \
+                                   queue:queue \
+                       completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) { \
+                            id aNil = nil; \
+                            id aData = aNil; \
+                            if (data) { \
+                                NSError *initError = aNil; \
+                                @try { \
+                                    aData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&initError]; \
+                                } @catch (NSException *exception) { \
+                                    aData = aNil;                     \
+                                } \
+                                if (!aData) { \
+                                    aData = [[NSString alloc] initWithData:data encoding:4]; \
+                                } \
+                            } \
+                            void (^aCallback)(NSURLResponse *response, id data, NSError *error) = callback; \
+                            aCallback ? aCallback(response, aData, connectionError) : 0; \
+                       }];}
+#endif
+#endif
 
 //######################################
 #pragma mark - 统计分析模块
@@ -205,10 +238,12 @@ context:nil].size : CGSizeZero);
 #pragma mark - FileSource
 //######################################
 #ifdef MODULE_FILE_SOURCE
+#define HEADER_FILE_SOURCE  <FileSource/FileSource.h>
 #define getFileData(aFileName) [FileSource dataWithFileName:aFileName]
 #define getPlistFileData(aPlistName) [FileSource dataWithPlistName:aPlistName]
 #define getJsonFileData(aJsonName) [FileSource dataWithJsonName:aJsonName]
 #else
+#define HEADER_FILE_SOURCE  <Foundation/Foundation.h>
 #define getPlistFileData(aPlistName) ({ \
     NSString *fileName = [aPlistName stringByAppendingString:@".plist"]; \
     NSString *fileBundle = [[NSBundle mainBundle] resourcePath]; \

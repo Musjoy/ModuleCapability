@@ -215,7 +215,7 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 //######################################
 #ifndef DEBUG
 #if __has_include(<UMMobClick/MobClick.h>)
-#define HEADER_ANALYSE <UMMobClick/MobClick.h>
+#define HEADER_ANALYSE  <UMMobClick/MobClick.h>
 #define triggerEventStr(eventId, evenDesc) [MobClick event:eventId attributes:@{@"name":evenDesc}]
 #define triggerEvent(eventId, attrs) [MobClick event:eventId attributes:attrs]
 #define triggerBeginPage(className) [MobClick beginLogPageView:className]
@@ -223,6 +223,7 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #endif
 #endif
 #ifndef triggerEventStr
+#define HEADER_ANALYSE  <Foundation/Foundation.h>
 #define triggerEventStr(eventId, evenDesc) NSLog(@"Event trigger : %@", evenDesc)
 #define triggerEvent(eventId, attrs) NSLog(@"Event trigger : %@ ; %@", attrs[@"name"], attrs)
 #define triggerBeginPage(className) NSLog(@"Page begin : %@", className)

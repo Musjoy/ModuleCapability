@@ -308,5 +308,42 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #endif
 
 
+//######################################
+#pragma mark - Keychain
+//######################################
+#ifndef HEADER_KEYCHAIN
+#ifdef  MODULE_KEYCHAIN
+#define HEADER_KEYCHAIN <MJKeychain/MJKeychain.h>
+#define keychainSetDefaultObject(obj, key)  [[MJKeychain defaultKeychain] setObject:obj forKey:key]
+#define keychainDefaultObjectForKey(key)    [[MJKeychain defaultKeychain] objectForKey:key]
+#define keychainSetDefaultSharedObject(obj, key)  [[MJKeychain defaultSharedKeychain] setObject:obj forKey:key]
+#define keychainDefaultSharedObjectForKey(key)    [[MJKeychain defaultSharedKeychain] objectForKey:key]
+#else
+#define HEADER_KEYCHAIN <Foundation/Foundation.h>
+#define keychainSetDefaultObject(obj, key)  ({ \
+NSMutableDictionary *dicQuery = [NSMutableDictionary dictionaryWithObjectsAndKeys:(id)kSecClassGenericPassword, kSecClass, kCFBooleanTrue, kSecReturnAttributes, [[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@".DefaultService"], kSecAttrService, key, kSecAttrAccount, nil]; \
+CFDictionaryRef cfResult; \
+if (SecItemCopyMatching((CFDictionaryRef)dicQuery, (CFTypeRef *)&cfResult) == noErr) { \
+NSDictionary *dicUpdate = [NSDictionary dictionaryWithObjectsAndKeys:obj, kSecAttrGeneric, nil]; \
+SecItemUpdate((CFDictionaryRef)dicQuery, (CFDictionaryRef)dicUpdate); \
+} else { \
+[dicQuery setObject:obj forKey:(id)kSecAttrGeneric]; \
+SecItemAdd((CFDictionaryRef)dicQuery, (CFTypeRef *)&cfResult); \
+} \
+})
+#define keychainDefaultObjectForKey(key)    ({ \
+NSMutableDictionary *dicQuery = [NSMutableDictionary dictionaryWithObjectsAndKeys:(id)kSecClassGenericPassword, kSecClass, kCFBooleanTrue, kSecReturnAttributes, [[[NSBundle mainBundle] bundleIdentifier] stringByAppendingString:@".DefaultService"], kSecAttrService, key, kSecAttrAccount, nil]; \
+CFDictionaryRef cfResult; \
+id object = nil; \
+if (SecItemCopyMatching((CFDictionaryRef)dicQuery, (CFTypeRef *)&cfResult) == noErr) { \
+NSDictionary *attributes = (__bridge NSDictionary*)cfResult; \
+object = [attributes objectForKey:(id)kSecAttrGeneric]; \
+} \
+object; \
+})
+#define keychainSetDefaultSharedObject(obj, key)  keychainSetDefaultObject(obj, key)
+#define keychainDefaultSharedObjectForKey(key)    keychainDefaultObjectForKey(key)
+#endif
+#endif
 
 #endif /* ModuleCapability_h */

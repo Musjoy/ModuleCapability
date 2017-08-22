@@ -249,7 +249,7 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
     NSString *fileName = [aPlistName stringByAppendingString:@".plist"]; \
     NSString *fileBundle = [[NSBundle mainBundle] resourcePath]; \
     NSString *filePath = [fileBundle stringByAppendingPathComponent:fileName]; \
-    NSDictionary *aDic = [[NSDictionary alloc] initWithContentsOfFile:filePath]; \
+    id aDic = [[NSDictionary alloc] initWithContentsOfFile:filePath]; \
     aDic; \
 })
 #define getJsonFileData(aJsonName) ({ \

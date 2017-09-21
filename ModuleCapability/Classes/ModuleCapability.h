@@ -29,6 +29,7 @@
 //######################################
 // 字符串拼接
 #define combine(x, y)   [(x) stringByAppendingString:(y)]
+#define combinePath(x, y)   [(x) stringByAppendingPathComponent:(y)]
 // 字符串长度获取
 #define textSizeWithFont(text, font) ([text length] > 0 ? [text sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero);
 #define multilineTextSize(text, font, maxSize) ([text length] > 0 ? \

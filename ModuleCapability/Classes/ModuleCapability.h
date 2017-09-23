@@ -66,12 +66,14 @@ context:nil].size : CGSizeZero);
 #endif
 #endif
 #endif
-#define kAppLookUpUrl       combine(@"http://itunes.apple.com/lookup?id=", kAppID)
-#define kAppDownload        combine(@"http://itunes.apple.com/app/id", kAppID)
-#define kAppComment         combine(combine(@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=", kAppID), @"&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8")
-#define kAppBundleId        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
 // 当前iOS版本
 #define __CUR_IOS_VERSION   ([[[UIDevice currentDevice] systemVersion] floatValue] * 10000)
+#define kAppLookUpUrl       combine(@"http://itunes.apple.com/lookup?id=", kAppID)
+#define kAppDownload        combine(@"http://itunes.apple.com/app/id", kAppID)
+#define kAppOldComment      combine(combine(@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=", kAppID), @"&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8")
+#define kAppComment         ((__CUR_IOS_VERSION<110000)?kAppOldComment:kAppDownload)
+#define kAppBundleId        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]
+
 // 屏幕高度
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 // 屏幕宽度

@@ -349,4 +349,45 @@ object; \
 #endif
 #endif
 
+
+
+//######################################
+#pragma mark - Alert
+//######################################
+#ifndef HEADER_ALERT
+#ifdef  MODULE_ALERT_MANAGER
+#define HEADER_ALERT <MJAlertManager/MJAlertManager.h>
+#define alertMessage(msg)                               [MJAlertManager showAlertWithTitle:nil message:msg]
+#define alertTitleMessage(title, msg)                   [MJAlertManager showAlertWithTitle:title message:msg]
+#define alertTitleMessageCallback(title, msg, callback) [MJAlertManager showAlertWithTitle:title message:msg completion:callback]
+#define alertInfoCallback(alertInfo, callback)          [MJAlertManager showAlertWith:alertInfo completion:callback]
+#define alertNoBtnsTitleMessage(title, msg)             [MJAlertManager showAlertNoBtnsWithTitle:title message:msg]
+#define alertRefreshTitleMessage(alert, aTitle, msg)    [MJAlertManager refreshAlert:alert title:aTitle message:msg];
+#define alertClickButtonAtIndex(alert, aIndex)          [MJAlertManager clickAlert:alert atIndex:aIndex]
+#else
+#define HEADER_ALERT <UIKit/UIKit.h>
+#define alertMessage(msg)                               alertTitleMessage(nil, msg)
+#define alertTitleMessage(title, msg)                   ({ \
+UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:title message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; \
+[alertView show]; \
+alertView; \
+})
+// 注意：这里的callback都不会掉用，使用 MODULE_ALERT_MANAGER 可以调用
+#define alertTitleMessageCallback(title, msg, callback) alertTitleMessage(title, msg)
+#define alertInfoCallback(alertInfo, callback)          alertTitleMessage([alertInfo objectForKey:@"title"], [alertInfo objectForKey:@"message"])
+#define alertNoBtnsTitleMessage(title, msg)             ({ \
+UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:msg delegate:nil cancelButtonTitle:nil otherButtonTitles:nil]; \
+[alertView show]; \
+alertView; \
+})
+#define alertRefreshTitleMessage(alert, aTitle, msg)    ({ \
+alert.title = aTitle; \
+alert.message = msg; \
+})
+#define alertClickButtonAtIndex(alert, aIndex)          ({ \
+[(UIAlertView *)alert dismissWithClickedButtonIndex:aIndex animated:YES];\
+})
+#endif
+#endif
+
 #endif /* ModuleCapability_h */

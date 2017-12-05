@@ -302,6 +302,7 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #define HEADER_CONTROLLER_MANAGER   "MJControllerManager.h"
 #define THEControllerManager        MJControllerManager
 #endif
+// WindowRootViewController
 #if __has_include("MJWindowRootViewController.h")
 #define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  "MJWindowRootViewController.h"
 #define THEWindowRootViewController         MJWindowRootViewController
@@ -309,7 +310,25 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  HEADER_BASE_VIEW_CONTROLLER
 #define THEWindowRootViewController         THEBaseViewController
 #endif
-
+// ControllerUtil
+#ifndef HEADER_CONTROLLER_UTIL
+#ifdef  MODULE_CONTROLLER_MANAGER
+#define HEADER_CONTROLLER_UTIL      HEADER_CONTROLLER_MANAGER
+#define getTopContainerController() [THEControllerManager topContainerController]
+#else
+#define HEADER_CONTROLLER_UTIL      <UIKit/UIKit.h>
+#define getTopContainerController() ({ \
+UIViewController *topVC = nil; \
+topVC = [[[UIApplication sharedApplication] keyWindow] rootViewController]; \
+UIViewController *presentVC = topVC.presentedViewController; \
+while (presentVC) { \
+    topVC = presentVC; \
+    presentVC = topVC.presentedViewController; \
+} \
+topVC; \
+})
+#endif
+#endif
 
 //######################################
 #pragma mark - Keychain
@@ -350,7 +369,6 @@ object; \
 #endif
 
 
-
 //######################################
 #pragma mark - Alert
 //######################################
@@ -364,6 +382,7 @@ object; \
 #define alertNoBtnsTitleMessage(title, msg)             [MJAlertManager showAlertNoBtnsWithTitle:title message:msg]
 #define alertRefreshTitleMessage(alert, aTitle, msg)    [MJAlertManager refreshAlert:alert title:aTitle message:msg];
 #define alertClickButtonAtIndex(alert, aIndex)          [MJAlertManager clickAlert:alert atIndex:aIndex]
+#define alertTitleMessageButtonsCallback(title, msg, cancl, confm, destry, callback)        [MJAlertManager showAlertWithTitle:title message:msg cancel:cancl confirm:confm destroy:destry otherButtons:nil completion:callback]
 #else
 #define HEADER_ALERT <UIKit/UIKit.h>
 #define alertMessage(msg)                               alertTitleMessage(nil, msg)
@@ -372,9 +391,8 @@ UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:title message:msg del
 [alertView show]; \
 alertView; \
 })
-// 注意：这里的callback都不会掉用，使用 MODULE_ALERT_MANAGER 可以调用
-#define alertTitleMessageCallback(title, msg, callback) alertTitleMessage(title, msg)
-#define alertInfoCallback(alertInfo, callback)          alertTitleMessage([alertInfo objectForKey:@"title"], [alertInfo objectForKey:@"message"])
+#define alertTitleMessageCallback(title, msg, callback) alertTitleMessageButtonsCallback(title, msg, nil, @"OK", nil, callback)
+#define alertInfoCallback(alertInfo, callback)          alertTitleMessageButtonsCallback([alertInfo objectForKey:@"title"], [alertInfo objectForKey:@"message"], [alertInfo objectForKey:@"cancel"], [alertInfo objectForKey:@"confirm"], [alertInfo objectForKey:@"destroy"], callback)
 #define alertNoBtnsTitleMessage(title, msg)             ({ \
 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:msg delegate:nil cancelButtonTitle:nil otherButtonTitles:nil]; \
 [alertView show]; \
@@ -384,9 +402,34 @@ alertView; \
 alert.title = aTitle; \
 alert.message = msg; \
 })
+// 这里暂时无法支持
 #define alertClickButtonAtIndex(alert, aIndex)          ({ \
-[(UIAlertView *)alert dismissWithClickedButtonIndex:aIndex animated:YES];\
 })
+#define alertTitleMessageButtonsCallback(title, msg, cancel, confirm, destroy, callback)    ({ \
+UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert]; \
+void (^alertClick)(NSInteger ) = ^(NSInteger selectIndex) { \
+    callback ? callback(selectIndex) : 0; \
+}; \
+if (cancel != nil) { \
+    [alertVC addAction:[UIAlertAction actionWithTitle:cancel style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) { \
+        alertClick(0); \
+    }]]; \
+} \
+if (confirm != nil) { \
+    [alertVC addAction:[UIAlertAction actionWithTitle:confirm style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) { \
+        alertClick(1); \
+    }]]; \
+} \
+if (destroy != nil) { \
+    [alertVC addAction:[UIAlertAction actionWithTitle:destroy style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction * _Nonnull action) { \
+        alertClick(-1); \
+    }]]; \
+} \
+UIViewController *topVC = getTopContainerController(); \
+[topVC presentViewController:alertVC animated:YES completion:NULL]; \
+})
+
+
 #endif
 #endif
 

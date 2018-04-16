@@ -23,7 +23,7 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		A2FF51EB1473BC6E1DC08A41 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A68CF3F5875EF8C908918717 /* Pods_ModuleCapability_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ModuleCapability_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B48557B8DAD26A5115CCBA08 /* ModuleCapability.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ModuleCapability.podspec; path = ../ModuleCapability.podspec; sourceTree = "<group>"; };
+		B48557B8DAD26A5115CCBA08 /* ModuleCapability.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ModuleCapability.podspec; path = ../ModuleCapability.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C3B293381E60522BD0B896D7 /* Pods-ModuleCapability_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModuleCapability_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModuleCapability_Tests/Pods-ModuleCapability_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA2F7AF74985D7AE05B75742 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */

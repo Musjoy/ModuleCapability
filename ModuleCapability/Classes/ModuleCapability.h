@@ -111,7 +111,7 @@ context:nil].size : CGSizeZero);
 
 #ifndef locString
 #ifdef MODULE_LOCALIZE
-#define HEADER_LOCALIZE     <MJLocalize.h>
+#define HEADER_LOCALIZE     <MJLocalize/MJLocalize.h>
 #define locString(str)                  [MJLocalize localizedString:str]
 #define locStringWithFormat(str,...)    [MJLocalize localizedStringWithFormat:str, __VA_ARGS__]
 #else
@@ -128,8 +128,8 @@ context:nil].size : CGSizeZero);
 //######################################
 // Json 解析
 #ifdef MODULE_DB_MODEL
-#define HEADER_MODEL        "DBModel.h"
-#define HEADER_JSON_PARSE   "DBModel.h"
+#define HEADER_MODEL        <DBModel/DBModel.h>
+#define HEADER_JSON_PARSE   <DBModel/DBModel.h>
 #define MODEL_BASE_CLASS    DBModel
 #define objectFromString(str, err) [DBModel objectFromJSONString:str error:err]
 #else
@@ -276,8 +276,8 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #if __has_include("BaseViewController.h")
 #define HEADER_BASE_VIEW_CONTROLLER "BaseViewController.h"
 #define THEBaseViewController       BaseViewController
-#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJBaseViewController.h"))
-#define HEADER_BASE_VIEW_CONTROLLER "MJBaseViewController.h"
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include(<MJControllerManager/MJBaseViewController.h>))
+#define HEADER_BASE_VIEW_CONTROLLER <MJControllerManager/MJBaseViewController.h>
 #define THEBaseViewController       MJBaseViewController
 #else
 #define HEADER_BASE_VIEW_CONTROLLER <UIKit/UIKit.h>
@@ -287,8 +287,8 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #if __has_include("NavigationController.h")
 #define HEADER_NAVIGATION_CONTROLLER    "NavigationController.h"
 #define THENavigationController         NavigationController
-#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJNavigationController.h"))
-#define HEADER_NAVIGATION_CONTROLLER    "MJNavigationController.h"
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include(<MJControllerManager/MJNavigationController.h>))
+#define HEADER_NAVIGATION_CONTROLLER    <MJControllerManager/MJNavigationController.h>
 #define THENavigationController         MJNavigationController
 #else
 #define HEADER_NAVIGATION_CONTROLLER    <UIKit/UINavigationController.h>
@@ -298,13 +298,13 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #if __has_include("ControllerManager.h")
 #define HEADER_CONTROLLER_MANAGER   "ControllerManager.h"
 #define THEControllerManager        ControllerManager
-#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include("MJControllerManager.h"))
-#define HEADER_CONTROLLER_MANAGER   "MJControllerManager.h"
+#elif (defined(MODULE_CONTROLLER_MANAGER) || __has_include(<MJControllerManager/MJControllerManager.h>))
+#define HEADER_CONTROLLER_MANAGER   <MJControllerManager/MJControllerManager.h>
 #define THEControllerManager        MJControllerManager
 #endif
 // WindowRootViewController
-#if __has_include("MJWindowRootViewController.h")
-#define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  "MJWindowRootViewController.h"
+#if __has_include(<MJControllerManager/MJWindowRootViewController.h>)
+#define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  <MJControllerManager/MJWindowRootViewController.h>
 #define THEWindowRootViewController         MJWindowRootViewController
 #else
 #define HEADER_WINDOW_ROOT_VIEW_CONTROLLER  HEADER_BASE_VIEW_CONTROLLER

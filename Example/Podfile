@@ -1,7 +1,7 @@
 use_frameworks!
 
 
-target 'ModuleCapability_Tests', :exclusive => true do
+target 'ModuleCapability_Tests' do
   pod 'ModuleCapability', :path => '../'
 
   

@@ -93,7 +93,7 @@ context:nil].size : CGSizeZero);
 #pragma mark - Logging配置
 //######################################
 #ifndef LOGGING_CONFIG_BY_USER
-#ifdef DEBUG
+#if defined(DEBUG) || defined(ForTest)
 // TRACE CONFIG
 #define LOGGING_ENABLED 1
 #define LOGGING_INCLUDE_CODE_LOCATION 1

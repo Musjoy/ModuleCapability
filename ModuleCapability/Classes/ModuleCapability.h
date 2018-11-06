@@ -114,10 +114,21 @@ context:nil].size : CGSizeZero);
 #define HEADER_LOCALIZE     <MJLocalize/MJLocalize.h>
 #define locString(str)                  [MJLocalize localizedString:str]
 #define locStringWithFormat(str,...)    [MJLocalize localizedStringWithFormat:str, __VA_ARGS__]
+#define locStringWithArgs(str, arrArgs) [MJLocalize localizedString:str withArguments:arrArgs]
 #else
 #define HEADER_LOCALIZE     <Foundation/Foundation.h>
 #define locString(str)                  NSLocalizedString(str, nil)
 #define locStringWithFormat(str,...)    [NSString localizedStringWithFormat:NSLocalizedString(str,nil), __VA_ARGS__]
+#define locStringWithArgs(str, arrArgs) ({  \
+NSString *strLocalized = NSLocalizedString(str, nil);       \
+if (arrArgs && arrArgs.count > 0) {         \
+    for (NSInteger i, len=arrArgs.count; i < len; i++) {    \
+        strLocalized = [strLocalized stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"{%d}", i]    \
+                                                               withString:arrArgs[i]];     \
+    }                                       \
+}                                           \
+strLocalized;                               \
+})
 #endif
 #else 
 #define HEADER_LOCALIZE     <Foundation/Foundation.h>

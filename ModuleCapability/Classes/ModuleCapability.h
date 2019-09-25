@@ -243,6 +243,18 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #define triggerBeginPage(className) NSLog(@"Page begin : %@", className)
 #define triggerEndPage(className) NSLog(@"Page end : %@", className)
 #endif
+
+#if __has_include(<MJAnalyse/MJAnalyse.h>)
+#ifndef FUN_BLOCK_MJAnalyse
+#undef HEADER_ANALYSE
+#undef triggerEventStr
+#undef triggerEvent
+#define HEADER_ANALYSE  <MJAnalyse/MJAnalyse.h>
+#define triggerEventStr(eventId, evenDesc) [MJAnalyse logEvenStr:eventId value:evenDesc]
+#define triggerEvent(eventId, attrs) [MJAnalyse logEvent:eventId parameters:attrs]
+#endif
+#endif
+
 /// 对应通用统计事件定义
 #ifndef STAT_Error
 #define STAT_Error      @"Error"

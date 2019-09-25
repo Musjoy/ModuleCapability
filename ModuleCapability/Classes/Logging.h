@@ -124,8 +124,17 @@
 #endif
 
 // Logging format
+
+#ifdef MODULE_LOG
+#import <MJLog/MJLog.h>
+#define __FILENAME__ (strrchr(__FILE__,'/')+1)
+#define HEADER_MJLOG  <MJLog.h>
+#define LOG_FORMAT_NO_LOCATION(fmt, lvl, ...) [[MJLog shard] logWithLevel:lvl line:0 file:"" func:"" content:[NSString stringWithFormat:fmt, ##__VA_ARGS__]];
+#define LOG_FORMAT_WITH_LOCATION(fmt, lvl, ...) [[MJLog shard] logWithLevel:lvl line:__LINE__ file:__FILENAME__ func:__FUNCTION__ content:[NSString stringWithFormat:fmt, ##__VA_ARGS__]];
+#else
 #define LOG_FORMAT_NO_LOCATION(fmt, lvl, ...) NSLog((@"[%@] " fmt), lvl, ##__VA_ARGS__)
 #define LOG_FORMAT_WITH_LOCATION(fmt, lvl, ...) NSLog((@"[%@] [Line %4d]%s" fmt), lvl, __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
+#endif
 
 // DDLog
 //#define LOG_FORMAT_NO_LOCATION(fmt, lvl, ...) DDLogInfo((@"[%@] " fmt), lvl, ##__VA_ARGS__)

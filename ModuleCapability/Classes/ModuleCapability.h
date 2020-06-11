@@ -236,6 +236,7 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #define triggerEndPage(className) [MobClick endLogPageView:className]
 #endif
 #endif
+
 #ifndef triggerEventStr
 #define HEADER_ANALYSE  <Foundation/Foundation.h>
 #define triggerEventStr(eventId, evenDesc) NSLog(@"Event trigger : %@", evenDesc)
@@ -244,14 +245,20 @@ NSOperationQueue *queue = [[NSOperationQueue alloc] init]; \
 #define triggerEndPage(className) NSLog(@"Page end : %@", className)
 #endif
 
+#ifndef triggerLog
+#define triggerLog(business, content) NSLog(@"Log business: %@ ; value: %@", business, content)
+#endif
+
 #if __has_include(<MJAnalyse/MJAnalyse.h>)
 #ifndef FUN_BLOCK_MJAnalyse
 #undef HEADER_ANALYSE
 #undef triggerEventStr
 #undef triggerEvent
+#undef triggerLog
 #define HEADER_ANALYSE  <MJAnalyse/MJAnalyse.h>
 #define triggerEventStr(eventId, evenDesc) [MJAnalyse logEvenStr:eventId value:evenDesc]
 #define triggerEvent(eventId, attrs) [MJAnalyse logEvent:eventId parameters:attrs]
+#define triggerLog(business, content) [MJAnalyse logBusiness:business value:content]
 #endif
 #endif
 
